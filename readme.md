@@ -30,7 +30,7 @@ pip install Pillow reportlab
 Run the script from the command line, providing the path to the parent directory containing image folders:
 
 ```bash
-python auto_images_to_pdf.py /path/to/parent/directory
+python auto_imgtopdf.py /path/to/parent/directory
 ```
 
 ### Options
@@ -39,7 +39,7 @@ python auto_images_to_pdf.py /path/to/parent/directory
 
 Example:
 ```bash
-python auto_images_to_pdf.py /path/to/parent/directory --min-images 5
+python auto_imgtopdf.py /path/to/parent/directory --min-images 5
 ```
 This will only create PDFs for folders containing at least 5 images.
 
