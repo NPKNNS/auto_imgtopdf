@@ -48,7 +48,6 @@ def convert_images_to_pdf(folder_path):
             image_files.append(file_path)
     
     # Convert WebP files to JPG and add them to the image list
-    print("converting .webp to jpg")
     converted_files = []
     for webp_file in webp_files:
         jpg_file = convert_webp_to_jpg(webp_file)
@@ -56,7 +55,7 @@ def convert_images_to_pdf(folder_path):
             converted_files.append(jpg_file)
         progress_bar(len(converted_files), len(webp_files))
     
-    print("\nconvert complate \n")
+    print("\n")
     
     # Add converted files to the image list
     image_files.extend(converted_files)
