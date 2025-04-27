@@ -2,6 +2,7 @@ import os
 import argparse
 from PIL import Image
 from reportlab.pdfgen import canvas
+from effect import progress_bar
 
 def convert_webp_to_jpg(webp_path):
     """Convert a WebP image to JPG and save it in the same folder."""
@@ -18,7 +19,6 @@ def convert_webp_to_jpg(webp_path):
             
         # Save as JPG
         img.save(jpg_path, 'JPEG', quality=90)
-        print(f"  Converted {os.path.basename(webp_path)} to JPG")
         
         return jpg_path
     except Exception as e:
@@ -48,11 +48,15 @@ def convert_images_to_pdf(folder_path):
             image_files.append(file_path)
     
     # Convert WebP files to JPG and add them to the image list
+    print("converting .webp to jpg")
     converted_files = []
     for webp_file in webp_files:
         jpg_file = convert_webp_to_jpg(webp_file)
         if jpg_file:
             converted_files.append(jpg_file)
+        progress_bar(len(converted_files), len(webp_files))
+    
+    print("\nconvert complate \n")
     
     # Add converted files to the image list
     image_files.extend(converted_files)
@@ -74,6 +78,7 @@ def convert_images_to_pdf(folder_path):
     # Create a PDF with reportlab
     c = canvas.Canvas(output_path, pagesize=(img_width, img_height))
     
+    pgs = 0
     for img_path in image_files:
         try:
             img = Image.open(img_path)
@@ -85,7 +90,8 @@ def convert_images_to_pdf(folder_path):
             c.setPageSize((img.width, img.height))
             c.drawImage(img_path, 0, 0, width=img.width, height=img.height)
             c.showPage()
-            print(f"  Added {os.path.basename(img_path)} to PDF")
+            pgs += 1
+            progress_bar(pgs, len(image_files))
         except Exception as e:
             print(f"  Error processing {img_path}: {e}")
     
